@@ -1,7 +1,9 @@
 .Morphology {
   display: flex;
+  justify-content: center;
+  margin: auto;
 }
 
-/* div.dropdown {
-  float: left;
-} */
+.Morphology .ui.selection.dropdown {
+  margin: 3px;
+}

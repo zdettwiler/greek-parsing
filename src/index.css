@@ -16,6 +16,13 @@ code {
     monospace;
 }
 
+h1 {
+  font-family: 'Times New Roman', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 100px;
+}
+
 .ui.selection.dropdown {
   min-width: 0;
 }

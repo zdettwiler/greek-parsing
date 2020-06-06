@@ -19,8 +19,6 @@ function App() {
     }
   });
 
-
-  console.log(words)
   return (
     <Container>
       <h1>Matthew 1:1</h1>
