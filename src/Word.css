@@ -1,0 +1,12 @@
+.Word {
+  float: left;
+  padding: 2px;
+  margin: 10px;
+}
+
+.greek {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  line-height: 35px;
+}
