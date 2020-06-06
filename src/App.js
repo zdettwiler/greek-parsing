@@ -20,8 +20,8 @@ function App() {
   });
 
   return (
-    <Container>
-      <h1>Matthew 1:1</h1>
+    <Container className='App'>
+      <h1>Romains 1:1</h1>
       { words.map(word => (
         <Word
           word={word}
