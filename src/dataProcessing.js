@@ -28,7 +28,7 @@ import axios from 'axios';
 // };
 
 async function getVerse() {
-  let data = await axios.get('https://raw.githubusercontent.com/morphgnt/sblgnt/master/66-Ro-morphgnt.txt');
+  let data = await axios.get('https://raw.githubusercontent.com/morphgnt/sblgnt/master/64-Jn-morphgnt.txt');
   data = data.data.split('\n');
   // console.log(data) // the header row
   // data.splice(0, 54);
@@ -64,7 +64,7 @@ async function getVerse() {
 
 // Parsing Code
   // // just Matthew 1:1
-  return data.filter(word => word.ref === '060101');
+  return data.filter(word => word.ref === '041401');
 }
 
 // function process(words) {

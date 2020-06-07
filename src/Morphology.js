@@ -45,15 +45,14 @@ const Morphology = ({ checkAnswer }) => {
   //   setIsCorrect(true);
   // }
 
-  const buildParsingDropdowns = () => {
-    // console.log(morph.find(nat => nat.value === nature).parsing)
-    let parsingFields = morphologyOptions.find(nat => nat.value === parsing.nature);
+  const buildParsingDropdowns = (options, value) => {
+    let parsingFields = options.find(field => field.value === value);
     if (!parsingFields || !parsingFields.parsing) {
       return;
     }
-
-    return Object.entries(parsingFields.parsing).map(([field, values]) => {
-      return (
+    
+    return Object.entries(parsingFields.parsing).reduce((dropdowns, [field, values]) => {
+      dropdowns.push((
         <Dropdown
           key={field}
           placeholder={field}
@@ -61,8 +60,13 @@ const Morphology = ({ checkAnswer }) => {
           options={values}
           onChange={(e, {value}) => handleChange(field, value)}
         ></Dropdown>
-      );
-    });
+      ));
+
+      if (parsingFields.parsing[field] && parsing[field] !== '') {
+        dropdowns.push(buildParsingDropdowns(parsingFields.parsing[field], parsing[field]))
+      }
+      return dropdowns
+    }, []);
   }
 
   return (
@@ -75,7 +79,7 @@ const Morphology = ({ checkAnswer }) => {
         options={morphologyOptions}
         onChange={(e, {value}) => handleChange('nature', value)}
       ></Dropdown>
-      { buildParsingDropdowns() }
+      { buildParsingDropdowns(morphologyOptions, parsing.nature) }
     </div>
   )
 };

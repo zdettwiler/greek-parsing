@@ -21,7 +21,7 @@ function App() {
 
   return (
     <Container className='App'>
-      <h1>Romains 1:1</h1>
+      <h1>Jean 14:1</h1>
       { words.map(word => (
         <Word
           word={word}

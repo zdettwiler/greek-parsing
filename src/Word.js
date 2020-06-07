@@ -22,7 +22,6 @@ const Word = ({word}) => {
         <div
           className={"greek" + (isCorrect ? ' correct' : '')}
         >{word.greek}</div>
-        {/* <div>{ isCorrect ? 'correct' : ' ' }</div> */}
         <Morphology
           key={word.greek}
           checkAnswer={ checkAnswer }
