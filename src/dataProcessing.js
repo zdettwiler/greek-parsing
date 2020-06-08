@@ -1,38 +1,39 @@
 import axios from 'axios';
 
-// const partOfSpeech = {
-//   'A-': 'adjective',
-//   'C-': 'conjunction',
-//   'D-': 'adverb',
-//   'I-': 'interjection',
-//   'N-': 'noun',
-//   'P-': 'preposition',
-//   'RA': 'definite article',
-//   'RD': 'demonstrative pronoun',
-//   'RI': 'interrogative/indefinite pronoun',
-//   'RP': 'personal pronoun',
-//   'RR': 'relative pronoun',
-//   'V-': 'verb',
-//   'X-': 'particle'
-// }
+const bookFiles = {
+  'Matthieu': '61-Mt-morphgnt.txt',
+  'Marc': '62-Mk-morphgnt.txt',
+  'Luc': '63-Lk-morphgnt.txt',
+  'Jean': '64-Jn-morphgnt.txt',
+  'Actes': '65-Ac-morphgnt.txt',
+  'Romains': '66-Ro-morphgnt.txt',
+  '1 Corinthiens': '67-1Co-morphgnt.txt',
+  '2 Corinthiens': '68-2Co-morphgnt.txt',
+  'Galates': '69-Ga-morphgnt.txt',
+  'Éphésiens': '70-Eph-morphgnt.txt',
+  'Philippiens': '71-Php-morphgnt.txt',
+  'Colossiens': '72-Col-morphgnt.txt',
+  '1 Thessaloniciens': '73-1Th-morphgnt.txt',
+  '2 Thessaloniciens': '74-2Th-morphgnt.txt',
+  '1 Timothée': '75-1Ti-morphgnt.txt',
+  '2 Timothée': '76-2Ti-morphgnt.txt',
+  'Tite': '77-Tit-morphgnt.txt',
+  'Philémon': '78-Phm-morphgnt.txt',
+  'Hébreux': '79-Heb-morphgnt.txt',
+  'Jacques': '80-Jas-morphgnt.txt',
+  '1 Pierre': '81-1Pe-morphgnt.txt',
+  '2 Pierre': '82-2Pe-morphgnt.txt',
+  '1 Jean': '83-1Jn-morphgnt.txt',
+  '2 Jean': '84-2Jn-morphgnt.txt',
+  '3 Jean': '85-3Jn-morphgnt.txt',
+  'Jude': '86-Jud-morphgnt.txt',
+  'Apocalypse': '87-Re-morphgnt.txt'
+}
 
-// const parse = {
-//   'person': {'1': '1st', '2': '2nd', '3': '3rd'},
-//   'tense': {'P': 'present', 'I': 'imperfect', 'F': 'future', 'A': 'aorist', 'X': 'perfect', 'Y': 'pluperfect'},
-//   'voice': {'A': 'active', 'M': 'middle', 'P': 'passive'},
-//   'mood': {'I': 'indicative', 'D': 'imperative', 'S': 'subjunctive', 'O': 'optative', 'N': 'infinitive', 'P': 'participle'},
-//   'case': {'N': 'nominative', 'G': 'genitive', 'D': 'dative', 'A': 'accusative'},
-//   'number': {'S': 'singular', 'P': 'plural'},
-//   'gender': {'M': 'masculine', 'F': 'feminine', 'N': 'neuter'},
-//   'degree': {'C': 'comparative', 'S': 'superlative'}
-// };
-
-async function getVerse() {
-  let data = await axios.get('https://raw.githubusercontent.com/morphgnt/sblgnt/master/64-Jn-morphgnt.txt');
-  data = data.data.split('\n');
-  // console.log(data) // the header row
-  // data.splice(0, 54);
-  data = data.map(item => {
+async function getVerse(book = 'Jean', chapter = 1, verse = 1) {
+  let data = await axios.get(`https://raw.githubusercontent.com/morphgnt/sblgnt/master/${bookFiles[book]}`);
+  
+  let bookData = data.data.trim().split('\n').map(item => {
     let row = item.split(' ');
     let parsing = !row[2]
       ? row[2]
@@ -48,23 +49,27 @@ async function getVerse() {
           'degree'
         ]
 
-        parsing[code[id]] = part === '-' ? '' : part // parse[code[id]][part];
-        parsing.nature = row[1] // partOfSpeech[row[1]];
+        parsing[code[id]] = part === '-' ? '' : part
+        parsing.nature = row[1]
         return parsing
       }, {});
-    // parsing.split('')
+
+    let reference = row[0].match(/(\d{2})(\d{2})(\d{2})/);
+    if (!reference || !reference[1]) {
+      console.log('id', item, 'row', row[0], 'match', row[0].match(/(\d{2})(\d{2})(\d{2})/))
+    }
     return {
-      ref: row[0], // regex \d{2}_([A-Za-z]{3}).(\d{3}).(\d{3})
+      reference,
+      book: book,
+      chapter: parseInt(reference[2]),
+      verse: parseInt(reference[3]),
       greek: row[3],
       rawParsing: row[2],
       parsing
     };
   });
 
-
-// Parsing Code
-  // // just Matthew 1:1
-  return data.filter(word => word.ref === '041401');
+  return bookData.filter(word => word.chapter === chapter && word.verse === verse);
 }
 
 // function process(words) {
@@ -99,6 +104,12 @@ async function getVerse() {
 //     return morph
 //   }, {}))
 // }
+
+
+function compileNT() {
+
+}
+  
 
 export {
   getVerse
