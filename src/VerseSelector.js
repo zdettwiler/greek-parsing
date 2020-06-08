@@ -11,7 +11,6 @@ function VerseSelector({ getVerse, book, bookOptions, chapter, chapterOptions, v
       <Dropdown
         className='book'
         selection
-        compact
         value={book}
         options={bookOptions}
         onChange={(e, {value}) => getVerse(value, chapter, verse)}

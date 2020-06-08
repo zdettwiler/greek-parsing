@@ -62,7 +62,7 @@ const bookOptions = [
 
 async function getBookData(book = 'Jean') {
   let data = await axios.get(`https://raw.githubusercontent.com/morphgnt/sblgnt/master/${bookFiles[book]}`);
-  
+  let verseNumbers = {};
   let bookData = data.data.trim().split('\n').map(item => {
     let row = item.split(' ');
     let parsing = !row[2]
@@ -85,9 +85,14 @@ async function getBookData(book = 'Jean') {
       }, {});
 
     let reference = row[0].match(/(\d{2})(\d{2})(\d{2})/);
-    if (!reference || !reference[1]) {
-      console.log('id', item, 'row', row[0], 'match', row[0].match(/(\d{2})(\d{2})(\d{2})/))
+
+    if (!verseNumbers[parseInt(reference[2])]) {
+      verseNumbers[parseInt(reference[2])] = [];
+    } else if (!verseNumbers[ parseInt(reference[2]) ].includes(parseInt(reference[3]))) {
+      verseNumbers[ parseInt(reference[2]) ].push(parseInt(reference[3]));
     }
+    
+
     return {
       reference,
       book: book,
@@ -99,7 +104,9 @@ async function getBookData(book = 'Jean') {
     };
   });
 
-  return bookData
+  console.log('verseNumbers', verseNumbers)
+
+  return [ bookData, verseNumbers ]
 }
 
 // function process(words) {

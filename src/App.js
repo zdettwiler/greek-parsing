@@ -6,28 +6,26 @@ import { getBookData, bookOptions } from './dataProcessing.js';
 
 import './App.css';
 
-const chapterOptions = [
-  { text: 1, value: 1 },
-  { text: 2, value: 2 },
-]
 
 function App() {
-  let [book, setBook] = useState('Jean');
-  // let [bookData, setBookData] = useState(null);
+  let [book, setBook] = useState('Matthieu');
   let [chapter, setChapter] = useState(1);
   let [verse, setVerse] = useState(1);
   let [words, setWords] = useState(null);
+  let [verseNumbers, setVerseNumbers] = useState({})
   
 
-  async function getWords(book, chapter, verse) {
-    // if (bookData === null) {
-    //   getWords(book, chapter, verse);
-    // }words 
-    let words = await getBookData(book);
-    setBook(book);
-    setChapter(chapter);
-    setVerse(verse);
-    setWords(words.filter(word => word.chapter === chapter && word.verse === verse));
+  async function getWords(newBook, newChapter, newVerse) {
+    // TODO: check if we've already downloaded the book data before doing it again!
+
+    let [words, numbers] = await getBookData(book);
+    setVerseNumbers(numbers);
+    setBook(newBook);
+    setChapter(newBook !== book ? 1 : newChapter);
+    setVerse(newChapter !== chapter ? 1 : newVerse);
+    setWords(words.filter(word => word.chapter === newChapter && word.verse === newVerse));
+
+    console.log(Object.keys(verseNumbers))
   }
   useEffect(() => {
     if (words === null) {
@@ -35,15 +33,15 @@ function App() {
     }
   });
 
-  return (
+  return Object.keys(verseNumbers).length && verseNumbers[chapter] && (
     <Container className='App'>
       <VerseSelector
         book={book}
         bookOptions={bookOptions}
         chapter={chapter}
-        chapterOptions={chapterOptions}
+        chapterOptions={Object.keys(verseNumbers).map(c => ({ text: parseInt(c), value: parseInt(c) }))}
         verse={verse}
-        verseOptions={chapterOptions}
+        verseOptions={verseNumbers[chapter].map(v => ({ text: v, value: v }))}
         getVerse={getWords}
       ></VerseSelector>
 

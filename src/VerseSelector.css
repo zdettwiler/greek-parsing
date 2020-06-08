@@ -2,3 +2,6 @@
   float: right;
 }
 
+.VerseSelector .ui.dropdown {
+  margin: 5px;
+}
