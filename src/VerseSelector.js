@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
 import './VerseSelector.css';
@@ -6,10 +6,6 @@ import './VerseSelector.css';
 
 function VerseSelector({ getVerse, book, bookOptions, chapter, chapterOptions, verse, verseOptions }) {
   
-
-  
-
-
   return (
     <div className='VerseSelector'>
       <Dropdown

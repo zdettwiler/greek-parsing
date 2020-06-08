@@ -3,7 +3,6 @@ import { Dropdown } from 'semantic-ui-react';
 
 import morphologyOptions from './morphologyOptions'
 import './Morphology.css'
-import Word from './Word';
 
 
 

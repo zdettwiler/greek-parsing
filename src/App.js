@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Dropdown } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import Word from './Word';
 import VerseSelector from './VerseSelector';
 import { getBookData, bookOptions } from './dataProcessing.js';
@@ -13,7 +13,7 @@ const chapterOptions = [
 
 function App() {
   let [book, setBook] = useState('Jean');
-  let [bookData, setBookData] = useState(null);
+  // let [bookData, setBookData] = useState(null);
   let [chapter, setChapter] = useState(1);
   let [verse, setVerse] = useState(1);
   let [words, setWords] = useState(null);

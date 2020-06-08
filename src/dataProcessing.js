@@ -136,9 +136,9 @@ async function getBookData(book = 'Jean') {
 // }
 
 
-function compileNT() {
+// function compileNT() {
 
-}
+// }
   
 
 export {
