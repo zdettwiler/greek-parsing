@@ -57,6 +57,7 @@ const Morphology = ({ checkAnswer }) => {
           key={field}
           placeholder={field}
           selection
+          compact
           options={values}
           onChange={(e, {value}) => handleChange(field, value)}
         ></Dropdown>
@@ -75,6 +76,7 @@ const Morphology = ({ checkAnswer }) => {
         key="nature"
         placeholder="nature"
         selection
+        compact
         value={parsing.nature}
         options={morphologyOptions}
         onChange={(e, {value}) => handleChange('nature', value)}

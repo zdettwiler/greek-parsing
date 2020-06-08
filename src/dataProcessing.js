@@ -30,7 +30,37 @@ const bookFiles = {
   'Apocalypse': '87-Re-morphgnt.txt'
 }
 
-async function getVerse(book = 'Jean', chapter = 1, verse = 1) {
+const bookOptions = [
+  { text: 'Matthieu', value: 'Matthieu' },
+  { text: 'Marc', value: 'Marc' },
+  { text: 'Luc', value: 'Luc' },
+  { text: 'Jean', value: 'Jean' },
+  { text: 'Actes', value: 'Actes' },
+  { text: 'Romains', value: 'Romains' },
+  { text: '1 Corinthiens', value: '1 Corinthiens' },
+  { text: '2 Corinthiens', value: '2 Corinthiens' },
+  { text: 'Galates', value: 'Galates' },
+  { text: 'Éphésiens', value: 'Éphésiens' },
+  { text: 'Philippiens', value: 'Philippiens' },
+  { text: 'Colossiens', value: 'Colossiens' },
+  { text: '1 Thessaloniciens', value: '1 Thessaloniciens' },
+  { text: '2 Thessaloniciens', value: '2 Thessaloniciens' },
+  { text: '1 Timothée', value: '1 Timothée' },
+  { text: '2 Timothée', value: '2 Timothée' },
+  { text: 'Tite', value: 'Tite' },
+  { text: 'Philémon', value: 'Philémon' },
+  { text: 'Hébreux', value: 'Hébreux' },
+  { text: 'Jacques', value: 'Jacques' },
+  { text: '1 Pierre', value: '1 Pierre' },
+  { text: '2 Pierre', value: '2 Pierre' },
+  { text: '1 Jean', value: '1 Jean' },
+  { text: '2 Jean', value: '2 Jean' },
+  { text: '3 Jean', value: '3 Jean' },
+  { text: 'Jude', value: 'Jude' },
+  { text: 'Apocalypse', value: 'Apocalypse' }
+]
+
+async function getBookData(book = 'Jean') {
   let data = await axios.get(`https://raw.githubusercontent.com/morphgnt/sblgnt/master/${bookFiles[book]}`);
   
   let bookData = data.data.trim().split('\n').map(item => {
@@ -69,7 +99,7 @@ async function getVerse(book = 'Jean', chapter = 1, verse = 1) {
     };
   });
 
-  return bookData.filter(word => word.chapter === chapter && word.verse === verse);
+  return bookData
 }
 
 // function process(words) {
@@ -112,5 +142,6 @@ function compileNT() {
   
 
 export {
-  getVerse
+  getBookData,
+  bookOptions
 };

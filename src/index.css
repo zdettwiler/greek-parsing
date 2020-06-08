@@ -25,7 +25,3 @@ h1 {
   font-size: 100px;
   margin-bottom: 50px;
 }
-
-.ui.selection.dropdown {
-  min-width: 0;
-}
