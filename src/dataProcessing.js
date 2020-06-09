@@ -69,14 +69,14 @@ async function getBookData(book = 'Jean') {
       ? row[2]
       : row[2].split('').reduce((parsing, part, id) => {
         const code = [
-          'person',
-          'tense',
-          'voice',
-          'mood',
-          'case',
-          'number',
-          'gender',
-          'degree'
+          'personne',
+          'temps',
+          'voix',
+          'mode',
+          'cas',
+          'nombre',
+          'genre',
+          'degré'
         ]
 
         parsing[code[id]] = part === '-' ? '' : part

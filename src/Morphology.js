@@ -9,15 +9,14 @@ import './Morphology.css'
 const Morphology = ({ checkAnswer }) => {
   // let [isCorrect, setIsCorrect] = useState(false);
   let [parsing, setParsing] = useState({
-    case: '',
-    degree: '',
-    gender: '',
-    mood: '',
-    nature: '',
-    person: '',
-    tense: '',
-    voice: '',
-    number: ''
+    'personne': '',
+    'temps': '',
+    'voix': '',
+    'mode': '',
+    'cas': '',
+    'nombre': '',
+    'genre': '',
+    'degré': ''
    });
 
   const handleChange = (field, value) => {
