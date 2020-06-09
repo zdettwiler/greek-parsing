@@ -74,7 +74,7 @@ function App() {
         )) }
       </Container>
     )
-    : <Loader active size='large'>Loading</Loader>;
+    : <Loader active size='large'>Chargement</Loader>;
 }
 
 export default App;
