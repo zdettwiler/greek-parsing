@@ -54,7 +54,7 @@ function App() {
 
   return Object.keys(verseNumbers).length && verseNumbers[chapter] && !isLoading
     ? (
-      <Container className='App'>
+      <div className='App'>
         <VerseSelector
           book={book}
           bookOptions={bookOptions}
@@ -64,15 +64,19 @@ function App() {
           verseOptions={verseNumbers[chapter].map(v => ({ text: v, value: v }))}
           getVerse={getWords}
         ></VerseSelector>
+        
+        <Container>
+          <h1>{book} {chapter}:{verse}</h1>
 
-        <h1>{book} {chapter}:{verse}</h1>
-
-        { words && words.map(word => (
-          <Word
-            word={word}
-          ></Word>
-        )) }
-      </Container>
+          <div className='Words'>
+            { words && words.map(word => (
+              <Word
+                word={word}
+              ></Word>
+            )) }
+          </div>
+        </Container>
+      </div>
     )
     : <Loader active size='large'>Chargement</Loader>;
 }
