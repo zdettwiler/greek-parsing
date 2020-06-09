@@ -1,4 +1,4 @@
-# Practice parsing greek
+# Practice parsing Koine Greek
 
 http://zdettwiler.github.io/greek-parsing/
 
