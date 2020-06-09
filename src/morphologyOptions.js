@@ -1,46 +1,46 @@
 export default [
   { 
     value: 'A-',
-    text: 'adjective',
+    text: 'adjectif',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],      
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ],
-      degree: [
+      degré: [
         { value: '-', text: '-' },
-        { value: 'C', text: 'comparative' },
-        { value: 'S', text: 'superlative' }
+        { value: 'C', text: 'comparatif' },
+        { value: 'S', text: 'superlatif' }
       ]
     } 
   },
   {
     value: 'N-',
-    text: 'noun',
+    text: 'nom',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ]
@@ -48,20 +48,20 @@ export default [
   },
   {
     value: 'RA',
-    text: 'definite article',
+    text: 'article défini',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ]
@@ -69,20 +69,20 @@ export default [
   },
   {
     value: 'RD',
-    text: 'demonstrative pronoun',
+    text: 'pronom démonstratif',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ]
@@ -90,20 +90,20 @@ export default [
   },
   {
     value: 'RI',
-    text: 'interrogative/indefinite pronoun',
+    text: 'pronom interrogatif/indéfini',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ]
@@ -111,20 +111,20 @@ export default [
   },
   {
     value: 'RP',
-    text: 'personal pronoun',
+    text: 'pronom personneel',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ]
@@ -132,20 +132,20 @@ export default [
   },
   {
     value: 'RR',
-    text: 'relative pronoun',
+    text: 'pronom relatif',
     parsing: {
-      case: [
+      cas: [
         { value: 'N', text: 'N' },
         { value: 'A', text: 'A' },
         { value: 'G', text: 'G' },
         { value: 'D', text: 'D' },
       ],
-      gender: [
+      genre: [
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
       ],
-      number: [
+      nombre: [
         { value: 'S', text: 'sg' },
         { value: 'P', text: 'pl' }
       ]
@@ -153,32 +153,32 @@ export default [
   },
   {
     value: 'V-',
-    text: 'verb',
+    text: 'verbe',
     parsing: {
-      voice: [
+      voix: [
         { value: 'A', text: 'active' },
-        { value: 'M', text: 'middle' },
+        { value: 'M', text: 'moyenne' },
         { value: 'P', text: 'passive' }
       ],
-      mood: [
+      mode: [
         {
           value: 'I',
-          text: 'indicative',
+          text: 'indicatif',
           parsing: {
-            tense: [
-              { value: 'P', text: 'present' },
-              { value: 'I', text: 'imperfect' },
-              { value: 'F', text: 'future' },
-              { value: 'A', text: 'aorist' },
-              { value: 'X', text: 'perfect' },
-              { value: 'Y', text: 'pluperfect' }
+            temps: [
+              { value: 'P', text: 'présent' },
+              { value: 'I', text: 'imparfait' },
+              { value: 'F', text: 'futur' },
+              { value: 'A', text: 'aoriste' },
+              { value: 'X', text: 'parfait' },
+              { value: 'Y', text: 'plus-que-parfait' }
             ],
-            person: [
-              { value: '1', text: '1st' },
-              { value: '2', text: '2nd' },
-              { value: '3', text: '3rd' }
+            personne: [
+              { value: '1', text: '1ère' },
+              { value: '2', text: '2ème' },
+              { value: '3', text: '3ème' }
             ],
-            number: [
+            nombre: [
               { value: 'S', text: 'sg' },
               { value: 'P', text: 'pl' }
             ]
@@ -186,22 +186,22 @@ export default [
         },
         {
           value: 'D',
-          text: 'imperative',
+          text: 'impératif',
           parsing: {
-            tense: [
-              { value: 'P', text: 'present' },
-              { value: 'I', text: 'imperfect' },
-              { value: 'F', text: 'future' },
-              { value: 'A', text: 'aorist' },
-              { value: 'X', text: 'perfect' },
-              { value: 'Y', text: 'pluperfect' }
+            temps: [
+              { value: 'P', text: 'présent' },
+              { value: 'I', text: 'imparfait' },
+              { value: 'F', text: 'futur' },
+              { value: 'A', text: 'aoriste' },
+              { value: 'X', text: 'parfait' },
+              { value: 'Y', text: 'plus-que-parfait' }
             ],
-            person: [
-              // { value: '1', text: '1st' },
-              { value: '2', text: '2nd' },
-              // { value: '3', text: '3rd' }
+            personne: [
+              // { value: '1', text: '1ère' },
+              { value: '2', text: '2ème' },
+              // { value: '3', text: '3ème' }
             ],
-            number: [
+            nombre: [
               { value: 'S', text: 'sg' },
               { value: 'P', text: 'pl' }
             ]
@@ -209,22 +209,22 @@ export default [
         },
         {
           value: 'S',
-          text: 'subjunctive',
+          text: 'subjonctif',
           parsing: {
-            tense: [
-              { value: 'P', text: 'present' },
-              { value: 'I', text: 'imperfect' },
-              { value: 'F', text: 'future' },
-              { value: 'A', text: 'aorist' },
-              { value: 'X', text: 'perfect' },
-              { value: 'Y', text: 'pluperfect' }
+            temps: [
+              { value: 'P', text: 'présent' },
+              { value: 'I', text: 'imparfait' },
+              { value: 'F', text: 'futur' },
+              { value: 'A', text: 'aoriste' },
+              { value: 'X', text: 'parfait' },
+              { value: 'Y', text: 'plus-que-parfait' }
             ],
-            person: [
-              { value: '1', text: '1st' },
-              { value: '2', text: '2nd' },
-              { value: '3', text: '3rd' }
+            personne: [
+              { value: '1', text: '1ère' },
+              { value: '2', text: '2ème' },
+              { value: '3', text: '3ème' }
             ],
-            number: [
+            nombre: [
               { value: 'S', text: 'sg' },
               { value: 'P', text: 'pl' }
             ]
@@ -232,22 +232,22 @@ export default [
         },
         {
           value: 'O',
-          text: 'optative',
+          text: 'optatif',
           parsing: {
-            tense: [
-              { value: 'P', text: 'present' },
-              { value: 'I', text: 'imperfect' },
-              { value: 'F', text: 'future' },
-              { value: 'A', text: 'aorist' },
-              { value: 'X', text: 'perfect' },
-              { value: 'Y', text: 'pluperfect' }
+            temps: [
+              { value: 'P', text: 'présent' },
+              { value: 'I', text: 'imparfait' },
+              { value: 'F', text: 'futur' },
+              { value: 'A', text: 'aoriste' },
+              { value: 'X', text: 'parfait' },
+              { value: 'Y', text: 'plus-que-parfait' }
             ],
-            person: [
-              { value: '1', text: '1st' },
-              { value: '2', text: '2nd' },
-              { value: '3', text: '3rd' }
+            personne: [
+              { value: '1', text: '1ère' },
+              { value: '2', text: '2ème' },
+              { value: '3', text: '3ème' }
             ],
-            number: [
+            nombre: [
               { value: 'S', text: 'sg' },
               { value: 'P', text: 'pl' }
             ]
@@ -255,22 +255,22 @@ export default [
         },
         {
           value: 'N',
-          text: 'infinitive',
+          text: 'infinitif',
           parsing: {
-            tense: [
-              { value: 'P', text: 'present' },
-              // { value: 'I', text: 'imperfect' },
-              // { value: 'F', text: 'future' },
-              { value: 'A', text: 'aorist' },
-              // { value: 'X', text: 'perfect' },
-              // { value: 'Y', text: 'pluperfect' }
+            temps: [
+              { value: 'P', text: 'présent' },
+              // { value: 'I', text: 'imparfait' },
+              // { value: 'F', text: 'futur' },
+              { value: 'A', text: 'aoriste' },
+              // { value: 'X', text: 'parfait' },
+              // { value: 'Y', text: 'plus-que-parfait' }
             ],
-            // person: [
-            //   { value: '1', text: '1st' },
-            //   { value: '2', text: '2nd' },
-            //   { value: '3', text: '3rd' }
+            // personne: [
+            //   { value: '1', text: '1ère' },
+            //   { value: '2', text: '2ème' },
+            //   { value: '3', text: '3ème' }
             // ],
-            // number: [
+            // nombre: [
             //   { value: 'S', text: 'sg' },
             //   { value: 'P', text: 'pl' }
             // ]
@@ -278,32 +278,32 @@ export default [
         },
         {
           value: 'P',
-          text: 'participle',
+          text: 'participe',
           parsing: {
-            tense: [
-              { value: 'P', text: 'present' },
-              // { value: 'I', text: 'imperfect' },
-              // { value: 'F', text: 'future' },
-              { value: 'A', text: 'aorist' },
-              // { value: 'X', text: 'perfect' },
-              // { value: 'Y', text: 'pluperfect' }
+            temps: [
+              { value: 'P', text: 'présent' },
+              // { value: 'I', text: 'imparfait' },
+              // { value: 'F', text: 'futur' },
+              { value: 'A', text: 'aoriste' },
+              // { value: 'X', text: 'parfait' },
+              // { value: 'Y', text: 'plus-que-parfait' }
             ],
-            // person: [
-            //   { value: '1', text: '1st' },
-            //   { value: '2', text: '2nd' },
-            //   { value: '3', text: '3rd' }
+            // personne: [
+            //   { value: '1', text: '1ère' },
+            //   { value: '2', text: '2ème' },
+            //   { value: '3', text: '3ème' }
             // ],
-            case: [
+            cas: [
               { value: 'N', text: 'N' },
               { value: 'A', text: 'A' },
               { value: 'G', text: 'G' },
               { value: 'D', text: 'D' }
             ],
-            number: [
+            nombre: [
               { value: 'S', text: 'sg' },
               { value: 'P', text: 'pl' }
             ],
-            gender: [
+            genre: [
               { value: 'M', text: 'm' },
               { value: 'F', text: 'f' },
               { value: 'N', text: 'n' }
@@ -313,9 +313,9 @@ export default [
       ]
     }
   },
-  { value: 'P-', text: 'preposition' },
-  { value: 'X-', text: 'particle' },
-  { value: 'C-', text: 'conjunction' },
-  { value: 'D-', text: 'adverb' },
+  { value: 'P-', text: 'préposition' },
+  { value: 'X-', text: 'particule' },
+  { value: 'C-', text: 'conjonction' },
+  { value: 'D-', text: 'adverbe' },
   { value: 'I-', text: 'interjection' }
 ];
