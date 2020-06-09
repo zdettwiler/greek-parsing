@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Loader } from 'semantic-ui-react';
+import { useParams } from "react-router-dom";
 import Word from './Word';
 import VerseSelector from './VerseSelector';
 import { getBookData, bookOptions } from './dataProcessing.js';
@@ -8,32 +9,38 @@ import './App.css';
 
 
 function App() {
+  let params = useParams();
+  console.log(params) 
   let [isLoading, setIsLoading] = useState(true);
-  let [book, setBook] = useState('Romains');
-  let [chapter, setChapter] = useState(1);
-  let [verse, setVerse] = useState(1);
+  let [book, setBook] = useState(params.book);
+  let [chapter, setChapter] = useState(parseInt(params.chapter));
+  let [verse, setVerse] = useState(parseInt(params.verse));
   let [words, setWords] = useState(null);
   let [bookData, setBookData] = useState([])
   let [verseNumbers, setVerseNumbers] = useState({})
   
 
   async function getWords(newBook, newChapter, newVerse) {
+    console.log('getting new Words', newBook, newChapter, newVerse)
     setIsLoading(true);
     // get data
     if (newBook !== book || !bookData.length) {
       let data = await getBookData(newBook); // TODO return object?
+      console.log('data', data);
       setBook(newBook);
       setBookData(data[0]); 
       setVerseNumbers(data[1]);
-      setNewReference(data, 1, 1);
+      setNewReference(data, newChapter, newVerse);
     } else {
       setNewReference([bookData, verseNumbers], newChapter, newVerse);
     }    
   }
 
   function setNewReference(data, newChapter, newVerse) {
+    console.log('setNewRefermence', data[1], newChapter, newVerse)
     // set chapter
     let checkedChapter = Object.keys(data[1]).includes(String(newChapter)) ? newChapter : 1;
+    console.log('checkedChapter', checkedChapter)
     setChapter(checkedChapter);
 
     // set verse
