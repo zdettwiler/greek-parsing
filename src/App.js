@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Loader } from 'semantic-ui-react';
 import Word from './Word';
 import VerseSelector from './VerseSelector';
 import { getBookData, bookOptions } from './dataProcessing.js';
@@ -8,6 +8,7 @@ import './App.css';
 
 
 function App() {
+  let [isLoading, setIsLoading] = useState(true);
   let [book, setBook] = useState('Matthieu');
   let [chapter, setChapter] = useState(1);
   let [verse, setVerse] = useState(1);
@@ -17,6 +18,7 @@ function App() {
   
 
   async function getWords(newBook, newChapter, newVerse) {
+    setIsLoading(true);
     // get data
     if (newBook !== book || !bookData.length) {
       let data = await getBookData(newBook); // TODO return object?
@@ -40,6 +42,8 @@ function App() {
     
     // set verse words
     setWords(data[0].filter(word => word.chapter === checkedChapter && word.verse === checkedVerse));
+
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -48,7 +52,7 @@ function App() {
     }
   });
 
-  return Object.keys(verseNumbers).length && verseNumbers[chapter]
+  return Object.keys(verseNumbers).length && verseNumbers[chapter] && !isLoading
     ? (
       <Container className='App'>
         <VerseSelector
@@ -70,7 +74,7 @@ function App() {
         )) }
       </Container>
     )
-    : null;
+    : <Loader active size='large'>Loading</Loader>;
 }
 
 export default App;

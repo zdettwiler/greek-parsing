@@ -104,8 +104,6 @@ async function getBookData(book = 'Jean') {
     };
   });
 
-  console.log('verseNumbers', verseNumbers)
-
   return [ bookData, verseNumbers ]
 }
 
