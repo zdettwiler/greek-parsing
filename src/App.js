@@ -9,7 +9,7 @@ import './App.css';
 
 function App() {
   let [isLoading, setIsLoading] = useState(true);
-  let [book, setBook] = useState('Matthieu');
+  let [book, setBook] = useState('Romains');
   let [chapter, setChapter] = useState(1);
   let [verse, setVerse] = useState(1);
   let [words, setWords] = useState(null);
