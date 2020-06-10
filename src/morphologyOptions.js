@@ -111,7 +111,7 @@ export default [
   },
   {
     value: 'RP',
-    text: 'pronom personneel',
+    text: 'pronom personnel',
     parsing: {
       cas: [
         { value: 'N', text: 'N' },
@@ -299,14 +299,14 @@ export default [
               { value: 'G', text: 'G' },
               { value: 'D', text: 'D' }
             ],
-            nombre: [
-              { value: 'S', text: 'sg' },
-              { value: 'P', text: 'pl' }
-            ],
             genre: [
               { value: 'M', text: 'm' },
               { value: 'F', text: 'f' },
               { value: 'N', text: 'n' }
+            ],
+            nombre: [
+              { value: 'S', text: 'sg' },
+              { value: 'P', text: 'pl' }
             ],
           }
         }
