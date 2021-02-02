@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Loader } from 'semantic-ui-react';
-import { useParams } from "react-router-dom";
+import {
+  useParams,
+  useHistory
+} from "react-router-dom";
 import Word from './Word';
 import VerseSelector from './VerseSelector';
 import { getBookData, bookOptions } from './dataProcessing.js';
@@ -10,6 +13,7 @@ import './App.css';
 
 function App() {
   let params = useParams();
+  let history = useHistory();
 
   let [isLoading, setIsLoading] = useState(false);
   let [book, setBook] = useState(params.book || 'Jean');
@@ -21,26 +25,23 @@ function App() {
   
 
   async function getWords(newBook, newChapter, newVerse) {
-    console.log('getting new Words', newBook, newChapter, newVerse)
+    // console.log('getting new Words', newBook, newChapter, newVerse)
     setIsLoading(true);
     // get data
     if (newBook !== book || !bookData.length) {
       let data = await getBookData(newBook); // TODO return object?
-      // console.log('data', data);
       setBook(newBook);
       setBookData(data[0]); 
       setVerseNumbers(data[1]);
-      setNewReference(data, newChapter, newVerse);
+      setNewReference(data, newBook, newChapter, newVerse);
     } else {
-      setNewReference([bookData, verseNumbers], newChapter, newVerse);
-    }    
+      setNewReference([bookData, verseNumbers], newBook, newChapter, newVerse);
+    }
   }
 
-  function setNewReference(data, newChapter, newVerse) {
-    // console.log('setNewRefermence', data[1], newChapter, newVerse)
+  function setNewReference(data, newBook, newChapter, newVerse) {
     // set chapter
     let checkedChapter = Object.keys(data[1]).includes(String(newChapter)) ? newChapter : 1;
-    // console.log('checkedChapter', checkedChapter)
     setChapter(checkedChapter);
 
     // set verse
@@ -49,7 +50,7 @@ function App() {
     
     // set verse words
     setWords(data[0].filter(word => word.chapter === checkedChapter && word.verse === checkedVerse));
-
+    history.push(`/${newBook}/${checkedChapter}/${checkedVerse}`);
     setIsLoading(false);
   }
 
