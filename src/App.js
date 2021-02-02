@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Loader } from 'semantic-ui-react';
+import {
+  useParams,
+  useHistory
+} from "react-router-dom";
 import Word from './Word';
 import VerseSelector from './VerseSelector';
 import { getBookData, bookOptions } from './dataProcessing.js';
@@ -8,16 +12,20 @@ import './App.css';
 
 
 function App() {
-  let [isLoading, setIsLoading] = useState(true);
-  let [book, setBook] = useState('Romains');
-  let [chapter, setChapter] = useState(1);
-  let [verse, setVerse] = useState(1);
+  let params = useParams();
+  let history = useHistory();
+
+  let [isLoading, setIsLoading] = useState(false);
+  let [book, setBook] = useState(params.book || 'Jean');
+  let [chapter, setChapter] = useState(parseInt(params.chapter) || 1);
+  let [verse, setVerse] = useState(parseInt(params.verse) || 1);
   let [words, setWords] = useState(null);
   let [bookData, setBookData] = useState([])
   let [verseNumbers, setVerseNumbers] = useState({})
   
 
   async function getWords(newBook, newChapter, newVerse) {
+    // console.log('getting new Words', newBook, newChapter, newVerse)
     setIsLoading(true);
     // get data
     if (newBook !== book || !bookData.length) {
@@ -25,13 +33,13 @@ function App() {
       setBook(newBook);
       setBookData(data[0]); 
       setVerseNumbers(data[1]);
-      setNewReference(data, 1, 1);
+      setNewReference(data, newBook, newChapter, newVerse);
     } else {
-      setNewReference([bookData, verseNumbers], newChapter, newVerse);
-    }    
+      setNewReference([bookData, verseNumbers], newBook, newChapter, newVerse);
+    }
   }
 
-  function setNewReference(data, newChapter, newVerse) {
+  function setNewReference(data, newBook, newChapter, newVerse) {
     // set chapter
     let checkedChapter = Object.keys(data[1]).includes(String(newChapter)) ? newChapter : 1;
     setChapter(checkedChapter);
@@ -42,12 +50,12 @@ function App() {
     
     // set verse words
     setWords(data[0].filter(word => word.chapter === checkedChapter && word.verse === checkedVerse));
-
+    history.push(`/${newBook}/${checkedChapter}/${checkedVerse}`);
     setIsLoading(false);
   }
 
   useEffect(() => {
-    if (words === null) {
+    if (words === null && !isLoading) {
       getWords(book, chapter, verse);
     }
   });
@@ -69,9 +77,10 @@ function App() {
           <h1>{book} {chapter}:{verse}</h1>
 
           <div className='Words'>
-            { words && words.map(word => (
+            { words && words.map((word, id) => (
               <Word
                 word={word}
+                key={`${word}-${id}`}
               ></Word>
             )) }
           </div>
