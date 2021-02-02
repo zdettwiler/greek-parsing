@@ -12,13 +12,13 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Router>
       <Switch>
         <Route path="/:book?/:chapter?/:verse?" children={<App />} />
       </Switch>
-    </Router>
-  </React.StrictMode>,
+    </Router>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

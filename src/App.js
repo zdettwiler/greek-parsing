@@ -10,11 +10,11 @@ import './App.css';
 
 function App() {
   let params = useParams();
-  console.log(params) 
-  let [isLoading, setIsLoading] = useState(true);
-  let [book, setBook] = useState(params.book);
-  let [chapter, setChapter] = useState(parseInt(params.chapter));
-  let [verse, setVerse] = useState(parseInt(params.verse));
+
+  let [isLoading, setIsLoading] = useState(false);
+  let [book, setBook] = useState(params.book || 'Jean');
+  let [chapter, setChapter] = useState(parseInt(params.chapter) || 1);
+  let [verse, setVerse] = useState(parseInt(params.verse) || 1);
   let [words, setWords] = useState(null);
   let [bookData, setBookData] = useState([])
   let [verseNumbers, setVerseNumbers] = useState({})
@@ -26,7 +26,7 @@ function App() {
     // get data
     if (newBook !== book || !bookData.length) {
       let data = await getBookData(newBook); // TODO return object?
-      console.log('data', data);
+      // console.log('data', data);
       setBook(newBook);
       setBookData(data[0]); 
       setVerseNumbers(data[1]);
@@ -37,10 +37,10 @@ function App() {
   }
 
   function setNewReference(data, newChapter, newVerse) {
-    console.log('setNewRefermence', data[1], newChapter, newVerse)
+    // console.log('setNewRefermence', data[1], newChapter, newVerse)
     // set chapter
     let checkedChapter = Object.keys(data[1]).includes(String(newChapter)) ? newChapter : 1;
-    console.log('checkedChapter', checkedChapter)
+    // console.log('checkedChapter', checkedChapter)
     setChapter(checkedChapter);
 
     // set verse
@@ -54,7 +54,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (words === null) {
+    if (words === null && !isLoading) {
       getWords(book, chapter, verse);
     }
   });
@@ -76,9 +76,10 @@ function App() {
           <h1>{book} {chapter}:{verse}</h1>
 
           <div className='Words'>
-            { words && words.map(word => (
+            { words && words.map((word, id) => (
               <Word
                 word={word}
+                key={`${word}-${id}`}
               ></Word>
             )) }
           </div>
