@@ -13,7 +13,7 @@ import './index.css';
 
 ReactDOM.render(
   // <React.StrictMode>
-    <Router>
+    <Router basename="/greek-parsing">
       <Switch>
         <Route path="/:book?/:chapter?/:verse?" children={<App />} />
       </Switch>
