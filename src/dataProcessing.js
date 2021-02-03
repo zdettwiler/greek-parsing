@@ -1,3 +1,4 @@
+import { findAllByTestId } from '@testing-library/react';
 import axios from 'axios';
 
 const bookFiles = {
@@ -107,46 +108,90 @@ async function getBookData(book = 'Jean') {
   return [ bookData, verseNumbers ]
 }
 
-// function process(words) {
-//   if (!words.length) {return}
-  
-//   console.log(words.reduce((morph, word) => {
-//     if (!word.parsing) { return morph; }
-//     if (!morph[word.parsing.nature]) {
-//       morph[word.parsing.nature] = {
-//         case: new Set(),
-//         degree: new Set(),
-//         gender: new Set(),
-//         mood: new Set(),
-//         number: new Set(),
-//         person: new Set(),
-//         tense: new Set(),
-//         voice: new Set(),
-//       };
-//     }
+function getVerseLevel(verse) {
+  if (!verse) return;
 
-//     morph[word.parsing.nature] = {
-//       case: morph[word.parsing.nature].case.add(word.parsing.case),
-//       degree: morph[word.parsing.nature].degree.add(word.parsing.degree),
-//       gender: morph[word.parsing.nature].gender.add(word.parsing.gender),
-//       mood: morph[word.parsing.nature].mood.add(word.parsing.mood),
-//       number: morph[word.parsing.nature].number.add(word.parsing.number),
-//       person: morph[word.parsing.nature].person.add(word.parsing.person),
-//       tense: morph[word.parsing.nature].tense.add(word.parsing.tense),
-//       voice: morph[word.parsing.nature].voice.add(word.parsing.voice)
-//     }
+  let chapter = 0;
 
-//     return morph
-//   }, {}))
-// }
+  for (let word of verse) {
+    console.log(word.parsing)
 
+    // NOUN: Chap. 2
+    if (word.parsing.nature === 'N-') {
+      chapter = Math.max(chapter, 2);
+    }
 
-// function compileNT() {
+    // ADJECTIVE: Chap. 5
+    else if (word.parsing.nature === 'A-') {
+      chapter = Math.max(chapter, 5);
+    }
 
-// }
-  
+    // VERB
+    else if (word.parsing.nature === 'V-') {
+
+      // PRESENT ACTIVE INDICATIVE: Chap. 1
+      if (checkParsing(word.parsing, { nature: 'V-', voix: 'A', mode: 'I', temps: 'P' })) {
+        chapter = Math.max(chapter, 1);
+      }
+
+      // FUTURE/IMPERFECT/AORIST ACTIVE INDICATIVE: Chap. 6
+      else if (checkParsing(word.parsing, { nature: 'V-', voix: 'A', mode: 'I', temps: ['F', 'I', 'A'] })) {
+        chapter = Math.max(chapter, 6);
+      }
+    
+      // PRESENT/FUTURE/IMPERFECT/AORIST ACTIVE IMPERATIVE/INFINITIVE: Chap. 7
+      else if (checkParsing(word.parsing, { nature: 'V-', voix: 'A', mode: ['I', 'D'], temps: ['P', 'F', 'I', 'A'] })) {
+        chapter = Math.max(chapter, 7);
+      }
+    
+      // PRESENT/AORIST ACTIVE PARTICIPLE: Chap. 7
+      else if (checkParsing(word.parsing, { nature: 'V-', voix: 'A', mode: 'P', temps: ['P', 'A'] })) {
+        chapter = Math.max(chapter, 7);
+      }
+    
+      // 2ND AORIST: Chap. 11
+      
+    
+      // FUTURE/IMPERFECT ACTIVE PARTICIPLE: Chap. 14
+      else if (checkParsing(word.parsing, { nature: 'V-', voix: 'A', mode: 'P', temps: ['F', 'I'] })) {
+        chapter = Math.max(chapter, 14);
+      }
+    
+      // PRESENT/FUTURE/IMPERFECT/AORIST PASSIVE INDICATIVE/IMPERATIVE/INFINITIVE/PARTICIPLE: Chap. 15
+      else if (checkParsing(word.parsing, { nature: 'V-', voix: 'P', mode: ['I', 'D', 'N', 'P'], temps: ['P', 'F', 'I', 'A'] })) {
+        chapter = Math.max(chapter, 15);
+      }
+    
+      // PERFECT: Chap. 16
+      else if (checkParsing(word.parsing, { nature: 'V-', temps: ['X', 'Y'] })) {
+        chapter = Math.max(chapter, 16);
+      }
+
+      // SUBJUNCTIVE: Chap. 17
+      else if (checkParsing(word.parsing, { nature: 'V-', mode: 'S' })) {
+        chapter = Math.max(chapter, 17);
+      }
+    }
+  }
+
+  console.log(chapter)
+}
+
+function checkParsing(parsing, checkParsing) {
+  for (let parse of Object.keys(checkParsing)) {
+    let check = Array.isArray(checkParsing[parse])
+      ? checkParsing[parse]
+      : [checkParsing[parse]];
+
+    if (!parsing[parse] || !check.includes(parsing[parse])) return false;
+  }
+
+  return true;
+}
 
 export {
+  bookOptions,
   getBookData,
-  bookOptions
+  getVerseLevel,
+  checkParsing
 };

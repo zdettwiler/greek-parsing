@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Word from './Word';
 import VerseSelector from './VerseSelector';
-import { getBookData, bookOptions } from './dataProcessing.js';
+import { bookOptions, getBookData, getVerseLevel } from './dataProcessing.js';
 
 import './App.css';
 
@@ -34,6 +34,7 @@ function App() {
       setBookData(data[0]); 
       setVerseNumbers(data[1]);
       setNewReference(data, newBook, newChapter, newVerse);
+
     } else {
       setNewReference([bookData, verseNumbers], newBook, newChapter, newVerse);
     }
@@ -58,7 +59,10 @@ function App() {
     if (words === null && !isLoading) {
       getWords(book, chapter, verse);
     }
+    getVerseLevel(words)
   });
+
+  // console.log(words)
 
   return Object.keys(verseNumbers).length && verseNumbers[chapter] && !isLoading
     ? (
