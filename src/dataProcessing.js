@@ -1,4 +1,3 @@
-import { findAllByTestId } from '@testing-library/react';
 import axios from 'axios';
 
 const bookFiles = {
@@ -105,16 +104,43 @@ async function getBookData(book = 'Jean') {
     };
   });
 
+  let groupedBook = bookData.reduce((acc, cur) => {
+    let ref = `${cur.chapter}:${cur.verse}`;
+
+    if (acc[ref]) {
+      return {
+        ...acc,
+        [ref]: [...acc[ref], cur]
+      }
+
+    } else {
+      return {
+        ...acc,
+        [ref]: [cur]
+      }
+    }
+  }, {});
+  console.log(groupedBook)
+  let chapters = {}
+  for (const [ref, verse] of Object.entries(groupedBook)) {
+
+    chapters[ref] = getVerseLevel(verse)
+    // console.log(getVerseLevel(verse))
+  }
+
+  console.log(chapters)
+
   return [ bookData, verseNumbers ]
 }
 
 function getVerseLevel(verse) {
+
   if (!verse) return;
 
   let chapter = 0;
 
   for (let word of verse) {
-    console.log(word.parsing)
+    // console.log(word.parsing)
 
     // NOUN: Chap. 2
     if (word.parsing.nature === 'N-') {
@@ -174,7 +200,7 @@ function getVerseLevel(verse) {
     }
   }
 
-  console.log(chapter)
+  return chapter
 }
 
 function checkParsing(parsing, checkParsing) {
