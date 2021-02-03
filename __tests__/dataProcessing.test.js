@@ -2,7 +2,7 @@ import {
   getBookData,
   getVerseLevel,
   checkParsing
-} from './dataProcessing.js';
+} from '../dataProcessing.js';
 
 describe('checkParsing', () => {
   const parsing = {
