@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 jest.mock('axios');
 
+
 describe('checkParsing', () => {
   test('is a function', () => {
     expect(checkParsing).toBeInstanceOf(Function);
@@ -42,7 +43,7 @@ describe('checkParsing', () => {
 describe('getBookData', () => {
   axios.get.mockResolvedValue({ data: `040101 P- -------- greek Ἐν ἐν ἐν
 040101 N- ----DSF- ἀρχῇ ἀρχῇ ἀρχῇ ἀρχή
-040201 C- -------- Καὶ Καὶ καί καί` });
+040202 C- -------- Καὶ Καὶ καί καί` });
 
 
   test('is a function', () => {
@@ -66,7 +67,7 @@ describe('getBookData', () => {
         1: { words: expect.any(Array) }
       },
       2: {
-        1: { words: expect.any(Array) }
+        2: { words: expect.any(Array) }
       }
     });
   });
@@ -74,7 +75,7 @@ describe('getBookData', () => {
   test('returns all word objects', async () => {
     let bookData = await getBookData()
     expect(bookData[2][1][1].words.length).toBe(2);
-    expect(bookData[2][2][1].words.length).toBe(1);
+    expect(bookData[2][2][2].words.length).toBe(1);
   });
 
   test('returns correct word objects', async () => {
@@ -87,5 +88,23 @@ describe('getBookData', () => {
       rawParsing: '--------',
       parsing: expect.any(Object)
     });
+    expect(bookData[2][2][2].words[0]).toMatchObject({
+      book: 'Jean',
+      chapter: 2,
+      verse: 2,
+      greek: 'Καὶ',
+      rawParsing: '--------',
+      parsing: expect.any(Object)
+    });
   });
+
+  // test('computes Duff chapter for each verse', async () => {
+  //   console.log(dataProcessing)
+  //   spy = jest.spyOn(dataProcessing.prototype, 'getVerseLevel');
+    
+  //   let bookData = await getBookData();
+
+  //   expect(bookData[2][1][1].duff).toBe(42);
+  //   expect(bookData[2][2][2].duff).toBe(42);
+  // });
 });

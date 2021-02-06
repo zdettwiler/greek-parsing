@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Word from './Word';
 import VerseSelector from './VerseSelector';
-import { bookOptions, getBookData, getVerseLevel } from './dataProcessing.js';
+import { bookOptions, getBookData } from './dataProcessing.js';
 
 import './App.css';
 
@@ -31,9 +31,9 @@ function App() {
     if (newBook !== book || !bookData.length) {
       let data = await getBookData(newBook); // TODO return object?
       setBook(newBook);
-      setBookData(data[0]); 
+      setBookData(data[2]); 
       setVerseNumbers(data[1]);
-      setNewReference(data, newBook, newChapter, newVerse);
+      setNewReference(data[2], newBook, newChapter, newVerse);
 
     } else {
       setNewReference([bookData, verseNumbers], newBook, newChapter, newVerse);
@@ -41,16 +41,16 @@ function App() {
   }
 
   function setNewReference(data, newBook, newChapter, newVerse) {
-    // set chapter
-    let checkedChapter = Object.keys(data[1]).includes(String(newChapter)) ? newChapter : 1;
+    // set chapter number
+    let checkedChapter = data[newChapter] ? newChapter : 1;
     setChapter(checkedChapter);
 
-    // set verse
-    let checkedVerse = data[1][checkedChapter] && data[1][checkedChapter].includes(newVerse) ? newVerse : 1;
+    // set verse number
+    let checkedVerse = data[checkedChapter][newVerse] ? newVerse : 1;
     setVerse(checkedVerse);
     
     // set verse words
-    setWords(data[0].filter(word => word.chapter === checkedChapter && word.verse === checkedVerse));
+    setWords(data[checkedChapter][checkedVerse].words);
     history.push(`/${newBook}/${checkedChapter}/${checkedVerse}`);
     setIsLoading(false);
   }
@@ -59,12 +59,10 @@ function App() {
     if (words === null && !isLoading) {
       getWords(book, chapter, verse);
     }
-    console.log(getVerseLevel(words))
   });
 
-  // console.log(words)
 
-  return Object.keys(verseNumbers).length && verseNumbers[chapter] && !isLoading
+  return Object.keys(bookData).length && bookData[chapter] && !isLoading
     ? (
       <div className='App'>
         <div className='DifficultySelector'>
@@ -72,7 +70,7 @@ function App() {
             // className='book'
             selection
             // value={book}
-            options={bookOptions}
+            options={[...Array(20).keys()].map((_, i) => ({ text: `Duff Chapitre ${i+1}`, value: i+1 }))}
             onChange={(e, {value}) => {
               //history.push(`/${value}/${chapter}/${verse}`);
               //getVerse(value, chapter, verse);
@@ -83,9 +81,9 @@ function App() {
           book={book}
           bookOptions={bookOptions}
           chapter={chapter}
-          chapterOptions={Object.keys(verseNumbers).map(c => ({ text: parseInt(c), value: parseInt(c) }))}
+          chapterOptions={Object.keys(bookData).map(c => ({ text: c, value: parseInt(c) }))}
           verse={verse}
-          verseOptions={verseNumbers[chapter].map(v => ({ text: v, value: v }))}
+          verseOptions={Object.keys(bookData[chapter]).map(v => ({ text: v, value: parseInt(v) }))}
           getVerse={getWords}
         ></VerseSelector>
         
