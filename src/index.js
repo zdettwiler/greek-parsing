@@ -15,7 +15,7 @@ import './index.css';
 console.log(process.env.PUBLIC_URL)
 ReactDOM.render(
   // <React.StrictMode>
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <Switch>
         <Route path="/:book?/:chapter?/:verse?" children={<App />} />
       </Switch>
