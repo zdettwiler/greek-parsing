@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  BrowserRouter as Router,
+  // BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
@@ -13,7 +14,7 @@ import './index.css';
 
 ReactDOM.render(
   // <React.StrictMode>
-    <Router basename="/greek-parsing">
+    <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route path="/:book?/:chapter?/:verse?" children={<App />} />
       </Switch>
