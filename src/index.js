@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
@@ -12,13 +12,11 @@ import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <Router basename="/greek-parsing">
-      <Switch>
-        <Route path="/:book?/:chapter?/:verse?" children={<App />} />
-      </Switch>
-    </Router>,
-  // </React.StrictMode>,
+  <Router>
+    <Switch>
+      <Route path="/:book?/:chapter?/:verse?" children={<App />} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 

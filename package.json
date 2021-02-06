@@ -2,7 +2,7 @@
   "name": "greek-parsing",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://zdettwiler.github.io/greek-parsing",
+  "homepage": "http://zdettwiler.github.io/greek-parsing/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
