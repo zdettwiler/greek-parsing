@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  // BrowserRouter as Router,
   HashRouter as Router,
   Switch,
   Route
@@ -12,15 +11,12 @@ import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
-console.log(process.env.PUBLIC_URL)
 ReactDOM.render(
-  // <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route path="/:book?/:chapter?/:verse?" children={<App />} />
-      </Switch>
-    </Router>,
-  // </React.StrictMode>,
+  <Router>
+    <Switch>
+      <Route path="/:book?/:chapter?/:verse?" children={<App />} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 
