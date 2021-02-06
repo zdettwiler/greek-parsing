@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Loader } from 'semantic-ui-react';
+import { Container, Loader, Dropdown } from 'semantic-ui-react';
 import {
   useParams,
   useHistory
@@ -59,7 +59,7 @@ function App() {
     if (words === null && !isLoading) {
       getWords(book, chapter, verse);
     }
-    getVerseLevel(words)
+    console.log(getVerseLevel(words))
   });
 
   // console.log(words)
@@ -67,6 +67,18 @@ function App() {
   return Object.keys(verseNumbers).length && verseNumbers[chapter] && !isLoading
     ? (
       <div className='App'>
+        <div className='DifficultySelector'>
+          <Dropdown
+            // className='book'
+            selection
+            // value={book}
+            options={bookOptions}
+            onChange={(e, {value}) => {
+              //history.push(`/${value}/${chapter}/${verse}`);
+              //getVerse(value, chapter, verse);
+            }}
+          ></Dropdown>
+        </div>
         <VerseSelector
           book={book}
           bookOptions={bookOptions}

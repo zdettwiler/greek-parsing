@@ -61,8 +61,13 @@ const bookOptions = [
 ]
 
 async function getBookData(book = 'Jean') {
-  let data = await axios.get(`https://raw.githubusercontent.com/morphgnt/sblgnt/master/${bookFiles[book]}`);
+  let data;
+  try{
+    data = await axios.get(`https://raw.githubusercontent.com/morphgnt/sblgnt/master/${bookFiles[book]}`);
+  } catch (e) { console.log(e, data)}
   let verseNumbers = {};
+
+  // go through each word 
   let bookData = data.data.trim().split('\n').map(item => {
     let row = item.split(' ');
     let parsing = !row[2]
@@ -104,33 +109,39 @@ async function getBookData(book = 'Jean') {
     };
   });
 
-  let groupedBook = bookData.reduce((acc, cur) => {
-    let ref = `${cur.chapter}:${cur.verse}`;
-
-    if (acc[ref]) {
-      return {
-        ...acc,
-        [ref]: [...acc[ref], cur]
+  // group all words into verses
+  let groupedBook = bookData.reduce((book, word) => {
+    if (book[word.chapter]) {
+      // group by verse
+      if (book[word.chapter][word.verse]) {
+        book[word.chapter][word.verse].words = [
+          ...book[word.chapter][word.verse].words,
+          word
+        ]
+      } else {
+        book[word.chapter][word.verse] = { words: [ word ] }
       }
-
     } else {
-      return {
-        ...acc,
-        [ref]: [cur]
+      book[word.chapter] = {
+        [word.verse]: { words: [ word ] }
       }
     }
+
+    return book;
   }, {});
-  console.log(groupedBook)
-  let chapters = {}
-  for (const [ref, verse] of Object.entries(groupedBook)) {
 
-    chapters[ref] = getVerseLevel(verse)
-    // console.log(getVerseLevel(verse))
-  }
+  // group all verses into chapters
+  // let chapters = {}
+  // for (const [ref, verse] of Object.entries(groupedBook)) {
 
-  console.log(chapters)
+  //   chapters[ref] = getVerseLevel(verse)
+  //   // console.log(getVerseLevel(verse))
+  // }
 
-  return [ bookData, verseNumbers ]
+  // console.log(chapters)
+  // console.log(bookData)
+
+  return [ bookData, verseNumbers, groupedBook ]
 }
 
 function getVerseLevel(verse) {

@@ -4,19 +4,10 @@ import {
   checkParsing
 } from '../dataProcessing.js';
 
-describe('checkParsing', () => {
-  const parsing = {
-    cas: "",
-    degré: "",    
-    genre: "",    
-    mode: "I",    
-    nature: "V-",    
-    nombre: "S",    
-    personne: "3",    
-    temps: "I",    
-    voix: "A"
-  }
+import axios from 'axios';
+jest.mock('axios');
 
+describe('checkParsing', () => {
   test('is a function', () => {
     expect(checkParsing).toBeInstanceOf(Function);
   });
@@ -45,5 +36,56 @@ describe('checkParsing', () => {
     expect(checkParsing({ a: 1, b: 2 }, { a: 1, b: [1, 2] })).toBe(true);
     expect(checkParsing({ a: 1, b: 1 }, { a: 1, b: [1, 2] })).toBe(true);
     expect(checkParsing({ a: 1, b: 1 }, { a: 1, b: [2, 3] })).toBe(false);
+  });
+});
+
+describe('getBookData', () => {
+  axios.get.mockResolvedValue({ data: `040101 P- -------- greek Ἐν ἐν ἐν
+040101 N- ----DSF- ἀρχῇ ἀρχῇ ἀρχῇ ἀρχή
+040201 C- -------- Καὶ Καὶ καί καί` });
+
+
+  test('is a function', () => {
+    expect(getBookData).toBeInstanceOf(Function);
+  });
+
+  test('gets data for John by default', async () => {
+    await getBookData();
+    expect(axios.get).toHaveBeenCalledWith('https://raw.githubusercontent.com/morphgnt/sblgnt/master/64-Jn-morphgnt.txt');
+  });
+
+  test('gets provided book data', async () => {
+    await getBookData('Matthieu');
+    expect(axios.get).toHaveBeenCalledWith('https://raw.githubusercontent.com/morphgnt/sblgnt/master/61-Mt-morphgnt.txt');
+  });
+
+  test('returns correct hierarchy', async () => {
+    let bookData = await getBookData()
+    expect(bookData[2]).toMatchObject({
+      1: {
+        1: { words: expect.any(Array) }
+      },
+      2: {
+        1: { words: expect.any(Array) }
+      }
+    });
+  });
+
+  test('returns all word objects', async () => {
+    let bookData = await getBookData()
+    expect(bookData[2][1][1].words.length).toBe(2);
+    expect(bookData[2][2][1].words.length).toBe(1);
+  });
+
+  test('returns correct word objects', async () => {
+    let bookData = await getBookData()
+    expect(bookData[2][1][1].words[0]).toMatchObject({
+      book: 'Jean',
+      chapter: 1,
+      verse: 1,
+      greek: 'greek',
+      rawParsing: '--------',
+      parsing: expect.any(Object)
+    });
   });
 });

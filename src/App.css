@@ -12,3 +12,13 @@
   flex-wrap: wrap;
   width: 100%;
 }
+
+.DifficultySelector {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.DifficultySelector .ui.dropdown {
+  margin: 5px;
+}
