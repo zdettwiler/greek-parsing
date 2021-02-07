@@ -20,21 +20,24 @@ function App() {
   let [chapter, setChapter] = useState(parseInt(params.chapter) || 1);
   let [verse, setVerse] = useState(parseInt(params.verse) || 1);
   let [words, setWords] = useState(null);
+  let [duff, setDuff] = useState(20);
   let [bookData, setBookData] = useState([])
   
 
-  async function getWords(newBook, newChapter, newVerse) {
+  async function getWords(newBook, newChapter, newVerse, duffChapter = 20) {
     // console.log('getting new Words', newBook, newChapter, newVerse)
     setIsLoading(true);
     // get data
     if (newBook !== book || !bookData.length) {
-      let data = await getBookData(newBook); // TODO return object?
+      let data = await getBookData(newBook); 
+      console.log(duffChapter, filterByChapter(data, duffChapter))
       setBook(newBook);
-      setBookData(data); 
+      setDuff(duffChapter)
+      setBookData(filterByChapter(data, duffChapter)); 
       setNewReference(data, newBook, newChapter, newVerse);
 
     } else {
-      setNewReference(bookData, newBook, newChapter, newVerse);
+      setNewReference(filterByChapter(bookData, duffChapter), newBook, newChapter, newVerse);
     }
   }
 
@@ -53,6 +56,26 @@ function App() {
     setIsLoading(false);
   }
 
+  function filterByChapter(bookData, duffChapter) {
+    let filteredData = {};
+    for (let chapter of Object.keys(bookData)) {
+      for (let verse of Object.keys(bookData[chapter])) {
+
+        if (bookData[chapter][verse].duff <= duffChapter) {
+          if (filteredData[chapter]) {
+            filteredData[chapter][verse] = bookData[chapter][verse]
+          } else {
+            filteredData[chapter] = {
+              [verse]: bookData[chapter][verse]
+            }
+          }
+        }
+
+      }
+    }
+    return filteredData
+  }
+
   useEffect(() => {
     if (words === null && !isLoading) {
       getWords(book, chapter, verse);
@@ -64,14 +87,14 @@ function App() {
     ? (
       <div className='App'>
         <div className='DifficultySelector'>
-          <Dropdown
+          Difficulté max.: <Dropdown
             // className='book'
             selection
-            value={bookData[chapter][verse].duff}
+            value={duff}
             options={[...Array(20).keys()].map((_, i) => ({ text: `Duff Chapitre ${i+1}`, value: i+1 }))}
             onChange={(e, {value}) => {
-              //history.push(`/${value}/${chapter}/${verse}`);
-              //getVerse(value, chapter, verse);
+              console.log('change duff chapter')
+              getWords(book, chapter, verse, value);
             }}
           ></Dropdown>
         </div>
@@ -86,7 +109,7 @@ function App() {
         ></VerseSelector>
         
         <Container>
-          <h1>{book} {chapter}:{verse}</h1>
+          <h1>{book} {chapter}:{verse}<span style={{fontSize: 15+'px'}}>Duff Chapitre {bookData[chapter][verse].duff}</span></h1>
 
           <div className='Words'>
             { words && words.map((word, id) => (
