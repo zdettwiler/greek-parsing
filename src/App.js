@@ -21,7 +21,6 @@ function App() {
   let [verse, setVerse] = useState(parseInt(params.verse) || 1);
   let [words, setWords] = useState(null);
   let [bookData, setBookData] = useState([])
-  let [verseNumbers, setVerseNumbers] = useState({})
   
 
   async function getWords(newBook, newChapter, newVerse) {
@@ -31,12 +30,11 @@ function App() {
     if (newBook !== book || !bookData.length) {
       let data = await getBookData(newBook); // TODO return object?
       setBook(newBook);
-      setBookData(data[2]); 
-      setVerseNumbers(data[1]);
-      setNewReference(data[2], newBook, newChapter, newVerse);
+      setBookData(data); 
+      setNewReference(data, newBook, newChapter, newVerse);
 
     } else {
-      setNewReference([bookData, verseNumbers], newBook, newChapter, newVerse);
+      setNewReference(bookData, newBook, newChapter, newVerse);
     }
   }
 
@@ -69,7 +67,7 @@ function App() {
           <Dropdown
             // className='book'
             selection
-            // value={book}
+            value={bookData[chapter][verse].duff}
             options={[...Array(20).keys()].map((_, i) => ({ text: `Duff Chapitre ${i+1}`, value: i+1 }))}
             onChange={(e, {value}) => {
               //history.push(`/${value}/${chapter}/${verse}`);

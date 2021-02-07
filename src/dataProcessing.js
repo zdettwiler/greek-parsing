@@ -130,21 +130,17 @@ async function getBookData(book = 'Jean') {
     return book;
   }, {});
 
-  // group all verses into chapters
-  // let chapters = {}
-  // for (const [ref, verse] of Object.entries(groupedBook)) {
-
-  //   chapters[ref] = getVerseLevel(verse)
-  //   // console.log(getVerseLevel(verse))
-  // }
-
-  // console.log(chapters)
-  // console.log(bookData)
-
-  return [ bookData, verseNumbers, groupedBook ]
+  // add duff chapter to each verse
+  for (let chapter in groupedBook) {
+    for (let verse in groupedBook[chapter]) {
+      groupedBook[chapter][verse].duff = getDuffChapter(groupedBook[chapter][verse].words)
+    }
+  }
+  
+  return groupedBook;
 }
 
-function getVerseLevel(verse) {
+function getDuffChapter(verse) {
 
   if (!verse) return;
 
@@ -229,6 +225,6 @@ function checkParsing(parsing, checkParsing) {
 export {
   bookOptions,
   getBookData,
-  getVerseLevel,
+  getDuffChapter,
   checkParsing
 };

@@ -1,6 +1,6 @@
 import {
   getBookData,
-  getVerseLevel,
+  getDuffChapter,
   checkParsing
 } from '../dataProcessing.js';
 
@@ -62,7 +62,7 @@ describe('getBookData', () => {
 
   test('returns correct hierarchy', async () => {
     let bookData = await getBookData()
-    expect(bookData[2]).toMatchObject({
+    expect(bookData).toMatchObject({
       1: {
         1: { words: expect.any(Array) }
       },
@@ -74,13 +74,13 @@ describe('getBookData', () => {
 
   test('returns all word objects', async () => {
     let bookData = await getBookData()
-    expect(bookData[2][1][1].words.length).toBe(2);
-    expect(bookData[2][2][2].words.length).toBe(1);
+    expect(bookData[1][1].words.length).toBe(2);
+    expect(bookData[2][2].words.length).toBe(1);
   });
 
   test('returns correct word objects', async () => {
     let bookData = await getBookData()
-    expect(bookData[2][1][1].words[0]).toMatchObject({
+    expect(bookData[1][1].words[0]).toMatchObject({
       book: 'Jean',
       chapter: 1,
       verse: 1,
@@ -88,7 +88,7 @@ describe('getBookData', () => {
       rawParsing: '--------',
       parsing: expect.any(Object)
     });
-    expect(bookData[2][2][2].words[0]).toMatchObject({
+    expect(bookData[2][2].words[0]).toMatchObject({
       book: 'Jean',
       chapter: 2,
       verse: 2,
@@ -98,13 +98,15 @@ describe('getBookData', () => {
     });
   });
 
-  // test('computes Duff chapter for each verse', async () => {
-  //   console.log(dataProcessing)
-  //   spy = jest.spyOn(dataProcessing.prototype, 'getVerseLevel');
-    
-  //   let bookData = await getBookData();
+  test('adds Duff chapter number for each verse', async () => {
+    let bookData = await getBookData();
+    expect(bookData[1][1].duff).toEqual(expect.any(Number));
+    expect(bookData[2][2].duff).toEqual(expect.any(Number));
+  });
 
-  //   expect(bookData[2][1][1].duff).toBe(42);
-  //   expect(bookData[2][2][2].duff).toBe(42);
+  // test('calls getDuffChapter', async () => {
+  //   let bookData = await getBookData();
+  //   expect(bookData[1][1].duff).toEqual(expect.any(Number));
+  //   expect(bookData[2][2].duff).toEqual(expect.any(Number));
   // });
 });
