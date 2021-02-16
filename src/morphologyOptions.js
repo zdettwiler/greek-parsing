@@ -120,6 +120,7 @@ export default [
         { value: 'D', text: 'D' },
       ],
       genre: [
+        { value: '', text: '-' },
         { value: 'M', text: 'm' },
         { value: 'F', text: 'f' },
         { value: 'N', text: 'n' }
